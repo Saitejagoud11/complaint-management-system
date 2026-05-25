@@ -25,5 +25,19 @@ This project helps students digitally submit complaints and track their complain
 - Login authentication
 - Real-time complaint tracking
 
+- **## 📸 Project Screenshots
+
+### Home Page
+![Home Page](home-page.png)
+
+### Login Page
+![Login Page](login-page.png)
+
+### Dashboard
+![Dashboard](dashboard.png)
+
+### Complaint Form
+![Complaint Form](complaint-form.png)**
+
 # Author
 Srigoundla Saiteja
