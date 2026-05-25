@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2><i class="fa-solid fa-user-shield"></i> Admin Dashboard</h2>
+    <div>
+        <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- DASHBOARD CARDS -->
+    <div class="card-grid">
+        <div class="card">
+            <i class="fa-solid fa-list fa-2x"></i>
+            <h3>Total Complaints</h3>
+            <h1>{{ complaints | length }}</h1>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-clock fa-2x"></i>
+            <h3>Pending</h3>
+            <h1>{{ complaints | selectattr("status","ne","Resolved") | list | length }}</h1>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-circle-check fa-2x"></i>
+            <h3>Resolved</h3>
+            <h1>{{ complaints | selectattr("status","equalto","Resolved") | list | length }}</h1>
+        </div>
+    </div>
+
+    <!-- USER MANAGEMENT -->
+    <h3><i class="fa-solid fa-users"></i> User Management</h3>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+
+        {% for u in users %}
+        <tr>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.role }}</td>
+            <td>
+                {% if u.role == 'student' %}
+                    <a href="/make-admin/{{ u.id }}">
+                        <i class="fa-solid fa-user-plus"></i> Make Admin
+                    </a>
+                {% else %}
+                    <i class="fa-solid fa-check"></i>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br><br>
+
+    <!-- ADMIN ACTIVITY LOGS -->
+    <h3><i class="fa-solid fa-clipboard-list"></i> Admin Activity Logs</h3>
+    <table>
+        <tr>
+            <th>Admin</th>
+            <th>Action</th>
+            <th>Target</th>
+            <th>Time</th>
+        </tr>
+
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.admin_username }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.target_user }}</td>
+            <td>{{ log.action_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br><br>
+
+    <!-- COMPLAINTS -->
+    <h3><i class="fa-solid fa-file-lines"></i> All Complaints</h3>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Image</th>
+            <th>Voice</th>
+            <th>Action</th>
+        </tr>
+
+        {% for c in complaints %}
+        <tr>
+            <td>{{ c.complaint_type }}</td>
+            <td>{{ c.description }}</td>
+            <td>{{ c.priority }}</td>
+            <td>{{ c.status }}</td>
+            <td>
+          {% if c.is_anonymous %}
+            Anonymous
+          {% else %}
+            {{ c.student }}
+          {% endif %}
+  	  </td>
+
+            <!-- IMAGE -->
+            <td>
+                {% if c.image %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ c.image) }}"
+                         width="80" style="border-radius:8px;">
+                {% else %}
+                    No Image
+                {% endif %}
+            </td>
+
+            <!-- VOICE -->
+            <td>
+                {% if c.voice %}
+                    <audio controls>
+                        <source src="{{ url_for('static', filename='uploads/' ~ c.voice) }}">
+                    </audio>
+                {% else %}
+                    No Voice
+                {% endif %}
+            </td>
+
+            <!-- RESOLVE -->
+            <td>
+                {% if c.status != 'Resolved' %}
+                    <a href="/resolve/{{ c.id }}">
+                        <i class="fa-solid fa-check"></i> Resolve
+                    </a>
+                {% else %}
+                    <i class="fa-solid fa-circle-check"></i>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>

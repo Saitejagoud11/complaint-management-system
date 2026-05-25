@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="/submit-complaint">New Complaint</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="container">
+    <h2>My Complaints</h2>
+<div class="card-grid">
+  <div class="card">
+    <i class="fa-solid fa-file-lines fa-2x"></i>
+    <h3>My Complaints</h3>
+    <h1>{{ complaints|length }}</h1>
+  </div>
+
+  <div class="card">
+    <i class="fa-solid fa-hourglass-half fa-2x"></i>
+    <h3>Pending</h3>
+    <h1>{{ complaints | selectattr("status","ne","Resolved") | list | length }}</h1>
+  </div>
+
+  <div class="card">
+    <i class="fa-solid fa-circle-check fa-2x"></i>
+    <h3>Resolved</h3>
+    <h1>{{ complaints | selectattr("status","equalto","Resolved") | list | length }}</h1>
+  </div>
+</div>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Resolved</th>
+            </tr>
+
+            {% for c in complaints %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.complaint_type }}</td>
+                <td>{{ c.description }}</td>
+                <td>{{ c.priority }}</td>
+                <td>{{ c.status }}</td>
+                <td>{{ c.created_time }}</td>
+                <td>{{ c.resolved_time }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

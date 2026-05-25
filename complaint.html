@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Complaint</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Submit Complaint</h2>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="container">
+
+<form method="POST" enctype="multipart/form-data">
+
+    <label>Complaint Type</label>
+    <select name="complaint_type" required>
+        <option value="">Select</option>
+        <option value="Electricity">Electricity</option>
+        <option value="Water">Water</option>
+        <option value="Cleaning">Cleaning</option>
+        <option value="Internet">Internet</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <label>Description</label>
+    <textarea name="description" rows="4" required></textarea>
+    <label>
+    <input type="checkbox" name="is_anonymous">
+    Submit as Anonymous
+    </label>
+
+    <label>Upload Issue Image (optional)</label>
+    <input type="file" name="image" accept="image/*">
+
+    <hr>
+
+    <h3>Voice Complaint (optional)</h3>
+
+    <button type="button" onclick="startRecording()">🎤 Start Recording</button>
+    <button type="button" onclick="stopRecording()">⏹ Stop</button>
+
+    <br><br>
+    <audio id="audioPreview" controls></audio>
+    <input type="hidden" name="voice_data" id="voice_data">
+
+    <br><br>
+    <button type="submit">Submit Complaint</button>
+
+</form>
+
+</div>
+
+<script>
+let recorder;
+let audioChunks = [];
+
+function startRecording() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(stream => {
+        recorder = new MediaRecorder(stream);
+        recorder.start();
+
+        recorder.ondataavailable = e => {
+            audioChunks.push(e.data);
+        };
+
+        recorder.onstop = () => {
+            const blob = new Blob(audioChunks, { type: 'audio/webm' });
+            const url = URL.createObjectURL(blob);
+            document.getElementById("audioPreview").src = url;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+                document.getElementById("voice_data").value = reader.result;
+            };
+        };
+    });
+}
+
+function stopRecording() {
+    recorder.stop();
+}
+</script>
+
+</body>
+</html>

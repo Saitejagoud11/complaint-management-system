@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/login">Login</a>
+</div>
+
+<div class="container">
+    <h2><i class="fa-solid fa-user-plus"></i> Student Registration</h2>
+
+<label><i class="fa-solid fa-user"></i> Username</label>
+<label><i class="fa-solid fa-envelope"></i> Email</label>
+<label><i class="fa-solid fa-lock"></i> Password</label>
+
+    <form method="POST">
+    <label>Username</label>
+    <input type="text" name="username" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Password</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Register</button>
+</form>
+</div>
+
+</body>
+</html>
