@@ -28,16 +28,16 @@ This project helps students digitally submit complaints and track their complain
 - **## 📸 Project Screenshots
 
 ### Home Page
-![Home Page](home-page.png)
+![Home Page](homepage.png)
 
 ### Login Page
-![Login Page](login-page.png)
+![Login Page](loginpage.png)
 
 ### Dashboard
-![Dashboard](dashboard.png)
+![Dashboard](admindashboard.png)
 
 ### Complaint Form
-![Complaint Form](complaint-form.png)**
+![Complaint Form](complaintpage.png)**
 
 # Author
 Srigoundla Saiteja
