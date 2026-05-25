@@ -30,11 +30,16 @@ This project helps students digitally submit complaints and track their complain
 ### Home Page
 ![Home Page](homepage.png)
 
+### Registration page
+![Registrationpage](registrationpage.png)
+
 ### Login Page
 ![Login Page](loginpage.png)
 
 ### Dashboard
-![Dashboard](admindashboard.png)
+![Dashboard](admindashboard1.png)
+![Dashboard](admindashboard2.png)
+![Dashboard](studentdashboard.png)
 
 ### Complaint Form
 ![Complaint Form](complaintpage.png)**
